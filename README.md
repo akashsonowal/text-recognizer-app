@@ -1,2 +1,2 @@
 # text-recognizer-app
-OCR application for handwritten paragraphs
+OCR application for handwritten paragraphs (full stack MLOps)
