@@ -10,6 +10,18 @@ Example usage of script:
     https://fsdl-public-assets.s3-us-west-2.amazonaws.com/paragraphs/a01-077.png
 """
 import argparse
+from pathlib import Path
+
+STAGED_MODEL_DIR_NAME = Path(__file__).resolve().parent / "artifacts" / "paragraph-text-recognizer"
+MODEL_FILE = "model.pt"
+
+class Paragraph_Text_Recognizer:
+  """Recognizes a paragraph of text in an image."""
+
+  def __init__(self, model_path=None):
+    if model_path is None:
+      model_path = STAGED_MODEL_DIR_NAME / MODEL_FILE
+    
 
 
 
