@@ -14,6 +14,10 @@ from pathlib import Path
 from typing import Sequence, Union
 
 from PIL import Image
+import torch
+
+from text_recognizer import util
+from text_recognizer.stems.paragraph import ParagraphStem
 
 STAGED_MODEL_DIR_NAME = Path(__file__).resolve().parent / "artifacts" / "paragraph-text-recognizer"
 MODEL_FILE = "model.pt"
