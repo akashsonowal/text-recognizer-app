@@ -6,7 +6,7 @@ line-length = 120
 target-version = ["py37"]
 
 [tool.mypy]
-ignore_missing_imports = True
+ignore_missing_imports = true
 exclude = ["/training/logs"]
 
 [tool.pytest.ini_options]
