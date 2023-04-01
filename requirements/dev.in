@@ -23,5 +23,3 @@ tornado>=6.0,<6.1
 pytorch-lightning==1.6.3
 torchmetrics<0.8
 wanb==0.12.17
-
-
