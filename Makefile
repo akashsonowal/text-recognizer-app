@@ -4,16 +4,20 @@ help:
 
 # Install exact Python and CUDA versions
 conda-update:
+      conda env update --prune -f environment.yml
+      echo "!!!RUN THE conda activate COMMAND ABOVE RIGHT NOW!!!"
 
 # Compile and install exact pip packages
 pip-tools:
-
-
+      pip install pip-tools==6.5.1 setuptools==59.5.0
+      
 # Compile and install the requirements for local linting (optional)
 pip-tools-lint:
+      pip install pip-tools==6.5.1 setuptools==59.5.0
 
 # Bump versions of transitive dependencies
 pip-tools-upgrade:
+      pip install pip-tools==6.5.1 setuptools==59.5.0
 
 # Example training command
 train-mnist-cnn-ddp:
