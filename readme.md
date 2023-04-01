@@ -1,6 +1,6 @@
 # text-recognizer-app 
 
-Note: This repo is a full clone of the implementation of the fsdl text recognizer app. All credit goes to the fsdl authors.
+Note: This repo is a full clone of the fsdl text recognizer app. All credit goes to fsdl.
 
 ![](app_diagram.png)
 
