@@ -8,4 +8,8 @@ class BaseLitModel(pl.LightningModule):
    """
    Generic PyTorch-Lightning class that must be initialized with a PyTorch module.
    """
-   pass
+   def configure_optimizers(self):
+      pass
+   
+   def training_step(self, batch, batch_idx):
+      pass
