@@ -83,5 +83,3 @@ class ResnetTransformer(nn.Module):
   def decode(self, x, y):
     """"""
     pass
-    
-    
