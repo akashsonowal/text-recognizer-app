@@ -15,6 +15,8 @@ class ResnetTransformer(nn.Module):
   ) -> None:
     super().__init__()
     self.data_config = data_config
+    self.input_dims = data_config["input_dims"]
+    self.num_classes = len(data_config["mapping"])
     
     self.mapping = data_config["mapping"]
     inverse_mapping = {val: ind for id, val in enumerate(data_config["mapping"])}
