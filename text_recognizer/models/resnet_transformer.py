@@ -24,7 +24,6 @@ class ResnetTransformer(nn.Module):
     self.end_token = inverse_mapping["<E>"]
     self.padding_token = inverse_mapping["<P>"]
     self.max_output_length = data_config["output_dims"][0]
-    pass
   
   def forward(self, x: torch.Tensor) -> torch.Tensor:
     """Autoregressively produce sequence of labels from input images.
@@ -41,11 +40,30 @@ class ResnetTransformer(nn.Module):
     """
     B = x.shape[0]
     S = self.max_output_length
+    x = self.encode(x) # (Sx, B, E)
+    
+    output_tokens = (torch.ones((B, S)) * self.padding_token).type_as(x).long() #(B, Sy)
+    output_tokens[:, 0] = self.start_token # Set start token
+    
     
     # Set all tokens after end or padding token to be padding
     for Sy in range(1, S):
       
     
     return output_tokens # (B, Sy)
+  
+  def encode(self, x: torch.Tensor) -> torch.Tensor:
+    """Encode each image tensor in a batch into a sequence of embeddings.
+      
+    Parameters
+    ----------
+    x 
+        (B, Ch, H, W) image, where Ch == 1 or Ch == 3
+        
+    Returns
+    -------
+        (Sx, B, E) sequence of embeddings, going left-to-right, top-to-bottom from final resnet feature maps
+    """
+    pass
     
     
