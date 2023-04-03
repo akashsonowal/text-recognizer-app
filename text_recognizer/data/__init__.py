@@ -7,3 +7,5 @@ from .emnist_lines import EMINSTLines
 
 from .iam_paragraphs import IAMParagraphs
 from .iam_lines import IAMLines
+
+from .fake_images import FakeImageData
