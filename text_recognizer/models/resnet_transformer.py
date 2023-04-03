@@ -7,6 +7,8 @@ import torch
 from torch import nn
 import torchvision
 
+from .transformer_util
+
 class ResnetTransformer(nn.Module):
   def __init__(
     self,
@@ -44,10 +46,22 @@ class ResnetTransformer(nn.Module):
     
     output_tokens = (torch.ones((B, S)) * self.padding_token).type_as(x).long() #(B, Sy)
     output_tokens[:, 0] = self.start_token # Set start token
-    
+    for Sy in range(1, S):
+      y = output_tokens[:, :Sy] # (B, Sy)
+      output = self.decode(x, y) # (Sy, B, C)
+      output = torch.argmax(output, dim=-1) # (Sy, B)
+      output_tokens[:, Sy] = output[-1] # Set the last output token
+      
+      # Early stopping of prediction loop to speed up prediction
+      if ((output_tokens[:, Sy] == self.end_token) | (output_tokens[:, Sy] == self.padding_token)).all:
+        break
     
     # Set all tokens after end or padding token to be padding
     for Sy in range(1, S):
+      ind = (output_tokens[:, Sy-1] == self.end_token) | (output_tokens[:, Sy-1] == self.padding_token)
+      output_tokens[ind, Sy] = self.padding_token
+    
+    return output_tokens # (B, Sy)
       
     
     return output_tokens # (B, Sy)
@@ -64,6 +78,10 @@ class ResnetTransformer(nn.Module):
     -------
         (Sx, B, E) sequence of embeddings, going left-to-right, top-to-bottom from final resnet feature maps
     """
+    pass
+  
+  def decode(self, x, y):
+    """"""
     pass
     
     
