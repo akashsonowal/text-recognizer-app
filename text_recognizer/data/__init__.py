@@ -4,3 +4,5 @@ from .mnist import MNIST
 
 from .emnist import EMNIST
 from .emnist_lines import EMINSTLines
+
+from .iam_paragraphs import IAM_Paragraphs
