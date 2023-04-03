@@ -1,0 +1,2 @@
+class FakeImageData(BaseDataModule):
+  pass
