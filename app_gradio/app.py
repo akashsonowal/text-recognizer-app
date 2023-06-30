@@ -23,3 +23,8 @@ import text_recognizer.util as util
 
 class PredictorBackend:
   pass
+
+if __name__ == "__main__":
+  parser = _make_parser()
+  args = parser.parse_args()
+  main(args)
