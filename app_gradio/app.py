@@ -51,12 +51,6 @@ def make_frontend(
   frontend = gr.Interface()
   return frontend
 
-
-
-
-
-
-
 class PredictorBackend:
   def run(self, image):
     pass
