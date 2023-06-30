@@ -58,7 +58,8 @@ def make_frontend(
 
 
 class PredictorBackend:
-  pass
+  def run(self, image):
+    pass
 
 if __name__ == "__main__":
   parser = _make_parser()
