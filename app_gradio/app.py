@@ -55,6 +55,9 @@ class PredictorBackend:
   def run(self, image):
     pass
 
+def _make_parser():
+  return parser 
+  
 if __name__ == "__main__":
   parser = _make_parser()
   args = parser.parse_args()
