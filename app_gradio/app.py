@@ -31,7 +31,20 @@ DEFAULT_PORT = 11700
 
 def main(args):
   predictor = PredictorBackend(url=args.model_url)
+  frontend = make_frontend(
+    predictor.run,
+    flagging=args.flagging,
+    gantry=args.gantry,
+    app_name=args.application
+  )
+  frontend.launch(
+    server_name="0.0.0.0",
+    server_port=args.port,
+    share=True,
+    favicon_path=FAVICON,
+  )
   
+
 
 
 
