@@ -43,7 +43,14 @@ def main(args):
     share=True,
     favicon_path=FAVICON,
   )
-  
+
+def make_frontend(
+
+):
+  """Creates a gradio.Interface frontend for an image to text function."""
+  frontend = gr.Interface()
+  return frontend
+
 
 
 
