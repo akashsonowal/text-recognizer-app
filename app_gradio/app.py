@@ -165,6 +165,30 @@ def _load_readme(with_logging=False):
   return readme
 
 def _make_parser():
+  parser = argparse.ArgumentParser(description=__doc__)
+  parser.add_argument(
+    "--model-url",
+    default=None,
+    type=str,
+    help="Identifies a URL to which to send image data. Data is base64-encoded, converted to a utf-8 string, and then set via a POST request as JSON with the key 'image'. Default is None, which instead sends the data to a model running locally."
+  )
+  parser.add_argument(
+    "--port",
+    default=DEFAULT_PORT,
+    type=int,
+    help=f"Port on which to expose this server. Default is {DEFAULT_PORT}."
+  )
+  parser.add_argument(
+    "--flagging",
+    action="store_true",
+    help="Pass --flagging and this flag to log user feedback to Gantry. Requires GANTRY_API_KEY to be defined as an environment variable.",
+  )
+  parser.add_argument(
+    "--application",
+    default=DEFAULT_APPLICATION_NAME,
+    type=str,
+    help=f"Name of the Gantry application to which feedback should be logged, if --gantry and --flagging are passed. Default is {DEFAULT_APPLICATION_NAME}."
+  )
   return parser 
   
 if __name__ == "__main__":
