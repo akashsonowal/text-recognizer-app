@@ -41,6 +41,9 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
             when testing and developing locally or in notebooks. The API key can
             alternatively be provided via the GANTRY_API_KEY environment variable.
         """
+        self.application = application
+        self.version = version 
+        gantry.init(api_key=api_key)
 
 def get_api_key() -> Optional[str]:
     """Convenience method for fetching the Gantry API key."""
