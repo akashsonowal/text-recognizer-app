@@ -101,6 +101,14 @@ class PredictorBackend:
 
     Otherwise, runs a predictor locally.
     """
+  def __init__(self, url):
+    if url is not None:
+      self.url = url
+      self._predict = self._predict_from_endpoint
+    else:
+      model = ParagraphTextRecognizer()
+      self._predict = model.predict 
+      
   def run(self, image):
     pass
 
