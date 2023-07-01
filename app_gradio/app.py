@@ -104,6 +104,14 @@ class PredictorBackend:
   def run(self, image):
     pass
 
+def _load_readme(with_logging=False):
+  with open(README) as f:
+    lines = f.readlines()
+    if not with_logging:
+      lines = lines[: lines.index("<!-- logging content below -->\n")]
+    readme = "".join(lines)
+  return readme
+
 def _make_parser():
   return parser 
   
