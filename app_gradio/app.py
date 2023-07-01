@@ -95,6 +95,12 @@ def make_frontend(
   return frontend
 
 class PredictorBackend:
+  """Interface to a backend that serves predictions.
+
+    To communicate with a backend accessible via a URL, provide the url kwarg.
+
+    Otherwise, runs a predictor locally.
+    """
   def run(self, image):
     pass
 
