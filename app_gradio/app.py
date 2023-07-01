@@ -108,8 +108,19 @@ class PredictorBackend:
     else:
       model = ParagraphTextRecognizer()
       self._predict = model.predict 
-      
+
   def run(self, image):
+    pred, metrics = self._predict_with_metrics(image)
+    self._log_inference(pred, metrics)
+    return pred
+  
+  def _predict_with_metrics(self, image):
+    pass 
+  
+  def _predict_from_endpoint(self, image):
+    pass 
+  
+  def _log_inference(self):
     pass
 
 def _load_readme(with_logging=False):
