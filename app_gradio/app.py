@@ -115,10 +115,41 @@ class PredictorBackend:
     return pred
   
   def _predict_with_metrics(self, image):
-    pass 
+    pred = self._predict(image)
+    stats = ImageStat.Stat(image)
+    metrics = {
+      "image_mean_intensity": stats.mean,
+      "image_median": stats.median,
+      "image_extrema": stats.extrema,
+      "image_area": image.size[0] * image.size[1],
+      "pred_length": len(pred),
+    }
+    return pred, metrics
   
   def _predict_from_endpoint(self, image):
-    pass 
+
+    """Send an image to an endpoint that accepts JSON and return the predicted text.
+
+    The endpoint should expect a base64 representation of the image, encoded as a string,
+    under the key "image". It should return the predicted text under the key "pred".
+
+    Parameters
+    ----------
+    image
+        A PIL image of handwritten text to be converted into a string.
+
+    Returns
+    -------
+    pred
+        A string containing the predictor's guess of the text in the image.
+    """
+    encoded_image = util.encode_b64_image(image)
+    headers = {"Content-type": "application/json"}
+    payload = json.dumps({"image": "data:image/png;base64," + encoded_image})
+    response = requests.post(self.url, data=payload, headers=headers)
+    pred = response.json()["pred"]
+
+    return pred
   
   def _log_inference(self):
     pass
