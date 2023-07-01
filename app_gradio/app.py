@@ -45,9 +45,23 @@ def main(args):
   )
 
 def make_frontend(
-
+  fn: Callable[[Image], str],
+  flagging: bool = False,
+  gantry: bool = False,
+  app_name: str = "text-recognizer"
 ):
   """Creates a gradio.Interface frontend for an image to text function."""
+  example_dir = Path("text_recognizer") / "tests" / "support" / "paragraphs"
+  example_fnames = [elem for elem in os.listdir(example_dir) if elem.endswith(".png")]
+  example_paths = [example_dir / fname for fname in example_fnames]
+  examples = [[str(path)] for path in example_paths]
+
+  allow_flagging = "never"
+
+  if flagging:
+    allow_flagging = "manual"
+    api_key = get_api_key()
+
   frontend = gr.Interface()
   return frontend
 
