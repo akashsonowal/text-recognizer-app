@@ -62,7 +62,36 @@ def make_frontend(
     allow_flagging = "manual"
     api_key = get_api_key()
 
-  frontend = gr.Interface()
+    if gantry and api_key:
+      allow_flagging = "manual"
+      flagging_callback = GantryImageToTextLogger(application=app_name, api_key=api_key)
+      flagging_dir = make_unique_bucket_name(prefix=app_name, seed=api_key)
+    else:
+      if gantry and api_key is None:
+        warnings.warn("No Gantry API key found, logging to local directory instead.", stacklevel=1)
+      flagging_callback = gr.CSVLogger()
+      flagging_dir = "flagged"
+  else:
+    flagging_dir, flagging_callback = None, None
+  
+  readme = _load_readme(with_logging=allow_flagging == "manual")
+
+  frontend = gr.Interface(
+    fn=fn, 
+    outputs=gr.components.Textbox(),
+    inputs=gr.components.Image(type="pil", label="Handwritten Text"),
+    title="📝 Text Recognizer",
+    thumbnail=FAVICON,
+    description=__doc__,
+    article=readme,
+    examples=examples,
+    cache_examples=False,
+    allow_flagging=allow_flagging,
+    flagging_option=["incorrect", "offensive", "other"],
+    flagging_callback=flagging_callback,
+    flagging_dir=flagging_dir
+  )
+
   return frontend
 
 class PredictorBackend:
