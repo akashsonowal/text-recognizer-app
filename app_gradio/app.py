@@ -151,8 +151,10 @@ class PredictorBackend:
 
     return pred
   
-  def _log_inference(self):
-    pass
+  def _log_inference(self, pred, metrics):
+    for key, value in metrics.items():
+      logging.info(f"METRIC {key} {value}")
+    logging.info(f"PRED >begin\n{pred}\nPRED >end")
 
 def _load_readme(with_logging=False):
   with open(README) as f:
