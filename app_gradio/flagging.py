@@ -44,6 +44,8 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
         self.application = application
         self.version = version 
         gantry.init(api_key=api_key)
+    
+    def setup(self, components: List[Component], flagging_dir)
 
 def get_api_key() -> Optional[str]:
     """Convenience method for fetching the Gantry API key."""
