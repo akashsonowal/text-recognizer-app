@@ -45,7 +45,12 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
         self.version = version 
         gantry.init(api_key=api_key)
     
-    def setup(self, components: List[Component], flagging_dir):
+    def setup(self, components: List[Component], flagging_dir: str):
+        """Sets up the GantryImageToTextLogger by creating or attaching to an S3 Bucket."""
+        self._counter = 0
+        self.bucket = s3_util.get_or_create_bucket(flagging_dir)
+        s3_util.enable_bucket_versioning(self.bucket)
+        
         pass 
     
     def flag(self):

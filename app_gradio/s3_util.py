@@ -56,7 +56,12 @@ def get_uri_of(bucket, key=None):
     pass 
 
 def enable_bucket_versioning(bucket):
-    pass 
+    """Turns on versioning for bucket contents, which avoids deletion."""
+    if not isinstance(bucket, str):
+        bucket = bucket.name 
+    
+    bucket_versioning = s3.BucketVersioning(bucket)
+    return bucket_versioning.enable() 
 
 def add_access_policy(bucket):
     pass 
