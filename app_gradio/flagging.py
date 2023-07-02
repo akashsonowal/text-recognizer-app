@@ -53,8 +53,21 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
         s3_util.add_access_policy(self.bucket)
         self.image_component_idx, self.text_component_idx = self._find_image_and_text_components(components)
 
-    def flag(self):
-        pass 
+    def flag(self, flag_data, flag_option=None, flag_index=None, username=None) -> int:
+        """Sends flagged outputs and feedback to Gantry and image inputs to S3."""
+        image = flag_data[self.image_component_idx]
+        text = flag_data[self.text_component_idx]
+
+        feedback = {"flag": flag_option}
+        if username is not None:
+            feedback["user"] = username 
+        
+        data_type, image_buffer = read_b64_string(image, return_data_type=True)
+        image_url = self._to_s3(image_buffer.read(), filetype=data_type)
+        self._to_gantry(image_url, text, feedback)
+        self._counter += 1
+
+        return self._counter
     
     def _to_gantry(self):
         pass 
