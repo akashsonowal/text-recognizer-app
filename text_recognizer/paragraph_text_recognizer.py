@@ -30,11 +30,19 @@ class ParagraphTextRecognizer():
         self.mapping = self.model.mapping
         self.ignore_tokens = self.model.ignore_tokens
         self.stem = ParagraphStem()
-
-        pass 
     
-    def predict(self):
-        pass
+    @torch.no_grad()
+    def predict(self, image: Union[str, Path, Image.Image]) -> str:
+        """Predict/infer text in input image (which can be a file path or url)."""
+        image_pil = image
+        if not isinstance(image, Image.Image):
+            image_pil = util.read_image_pil(image, grayscale=True)
+
+        image_tensor = self.stem(image_pil).unsqueeze(axis=0)
+        y_pred = self.model(image_tensor)[0]
+        pred_str = convert_y_label_to_string(y_pred=y_pred, mapping=self.mapping, ignore_tokens=self.ignore_tokens)
+
+        return pred_str 
 
 def main():
     text_recognizer = ParagraphTextRecognizer()
