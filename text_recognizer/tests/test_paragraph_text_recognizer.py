@@ -1,0 +1,1 @@
+"""Test for paragraph_text_recognizer module."""
