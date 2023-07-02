@@ -21,6 +21,9 @@ def to_categorical(y, num_classes):
 def read_image_pil():
   pass
 
+def read_image_pil_file():
+  pass
+
 @contextlib.contextmanager
 def temporary_working_directory(working_dir: Union[str, Path]):
   """Temporarily switches to a directory, then returns to the original directory on exit."""
@@ -30,3 +33,27 @@ def temporary_working_directory(working_dir: Union[str, Path]):
     yield
   finally:
     os.chdir(curdir)
+
+def read_b64_image():
+  pass 
+
+def read_b64_string():
+  pass 
+
+def get_b64_filetype():
+  pass 
+
+def split_and_validate_b64_string():
+  pass 
+
+def encode_b64_image():
+  pass 
+
+def compute_sha256():
+  pass 
+
+class TqdmUpTo():
+  pass
+
+def download_url():
+  pass  
