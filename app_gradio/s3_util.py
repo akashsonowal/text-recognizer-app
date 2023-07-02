@@ -36,6 +36,11 @@ def _create_bucket(name):
 
     return name, bucket_reponse
 
+def make_unique_bucket_name(prefix, seed):
+    """Creates a unique bucket name from a prefix and a seed."""
+    name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
+    return prefix + "-" + name
+
 def _format_url(bucket_name, region, key=None):
     key = key or ""
     url = S3_URL_FORMAT.format(bucket=bucket_name, region=region, key=key)
