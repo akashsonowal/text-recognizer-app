@@ -21,8 +21,17 @@ from text_recognizer.stems.paragraph import ParagraphStem
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent / "artifacts" / "paragraph-text-recognizer"
 MODEL_FILE = "model.pt"
 
+class ParagraphTextRecognizer():
+    def __init__(self):
+        pass 
+    
+    def predict(self):
+        pass
+
 def main():
-    text_recognizer = 
+    text_recognizer = ParagraphTextRecognizer()
+    pred_str = text_recognizer.predict(args.filename)
+    print(pred_str)
 
 if __name__ == "__main__":
     main()
