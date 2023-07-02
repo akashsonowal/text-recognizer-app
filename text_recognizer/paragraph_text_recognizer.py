@@ -44,6 +44,9 @@ class ParagraphTextRecognizer():
 
         return pred_str 
 
+def convert_y_label_to_string(y: torch.Tensor, mapping: Sequence[str], ignore_tokens: Sequence[int]) -> str:
+    return "".join([mapping[i] for i in y if i not in ignore_tokens])
+
 def main():
     text_recognizer = ParagraphTextRecognizer()
     pred_str = text_recognizer.predict(args.filename)
