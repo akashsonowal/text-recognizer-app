@@ -25,7 +25,19 @@ def get_or_create_bucket(name):
     bucket = s3.Bucket(name)
 
     return bucket
-    
+
+def _create_bucket(name):
+    """Creates a bucket with the provided name."""
+    session = boto3.session.session() # sessions hold on to credentials and config
+    current_region = session.region_name # so we can pull the default region
+    bucket_config = {"LocationConstraint": current_region} # and apply it to the bucket
+
+    bucket_reponse = s3.create_bucket(Bucket=name, CreateBucketConfiguration=bucket_config)
+
+    return name, bucket_reponse
+
+
+
 
 
 
