@@ -68,8 +68,37 @@ def add_access_policy(bucket):
     access_policy = json.dumps(_get_policy(bucket.name))
     s3.meta.client.put_bucket_policy(Bucket=bucket.name, Policy=access_policy)
 
-def _get_policy(bucket):
-    pass
+def _get_policy(bucket_name):
+    """Returns a bucket policy allowing Gantry app access as a JSON-compatible dictionary."""
+    return {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "AWS": [
+                        "arn:aws:iam::848836713690:root",
+                        "arn:aws:iam::339325199688:root",
+                        "arn:aws:iam::665957668247:root",
+                    ]
+                },
+                "Action": ["s3:GetObject", "s3:GetObjectVersion"],
+                "Resource": f"arn:aws:s3:::{bucket_name}/*",
+            },
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "AWS": [
+                        "arn:aws:iam::848836713690:root",
+                        "arn:aws:iam::339325199688:root",
+                        "arn:aws:iam::665957668247:root",
+                    ]
+                },
+                "Action": "s3:ListBucketVersions",
+                "Resource": f"arn:aws:s3:::{bucket_name}",
+            },
+        ],
+    }
 
 def make_identifier(byte_data):
     """Create a unique identifier for a collection of bytes via hashing."""
