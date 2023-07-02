@@ -27,7 +27,10 @@ class ParagraphTextRecognizer():
         if model_path is None:
             model_path = STAGED_MODEL_DIRNAME / MODEL_FILE
         self.model = torch.jit.load(model_path)
-        
+        self.mapping = self.model.mapping
+        self.ignore_tokens = self.model.ignore_tokens
+        self.stem = ParagraphStem()
+
         pass 
     
     def predict(self):
