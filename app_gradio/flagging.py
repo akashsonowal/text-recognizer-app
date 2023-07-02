@@ -72,8 +72,14 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
     def _to_gantry(self):
         pass 
     
-    def _to_s3(self):
-        pass 
+    def _to_s3(self, image_bytes, key=None, filetype=None):
+        if key is None:
+            key = s3_util.make_key(image_bytes, filetype=filetype)
+        
+        s3_uri = s3_util.get_uri_of(self.bucket, key)
+        with open(s3_uri, "wb") as s3_object:
+            s3_object.write(image_bytes)
+        return s3_uri
     
     def _find_image_and_text_components(self, components: List[Component]):
         image_component_idx, text_component_idx = None, None
