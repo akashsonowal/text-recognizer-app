@@ -64,7 +64,9 @@ def enable_bucket_versioning(bucket):
     return bucket_versioning.enable() 
 
 def add_access_policy(bucket):
-    pass 
+    """Adds a policy to our bucket that allows the Gantry app to access data."""
+    access_policy = json.dumps(_get_policy(bucket.name))
+    s3.meta.client.put_bucket_policy(Bucket=bucket.name, Policy=access_policy)
 
 def _get_policy(bucket):
     pass

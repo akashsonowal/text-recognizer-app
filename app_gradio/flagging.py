@@ -50,6 +50,7 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
         self._counter = 0
         self.bucket = s3_util.get_or_create_bucket(flagging_dir)
         s3_util.enable_bucket_versioning(self.bucket)
+        s3_util.add_access_policy(self.bucket)
         
         pass 
     
