@@ -14,6 +14,10 @@ from PIL import Image
 import smart_open
 from tqdm import tqdm
 
+def to_categorical(y, num_classes):
+  """1-hot encode a tensor."""
+  return np.eye(num_classes, dtype="uint8")[y]
+
 def read_image_pil():
   pass
 
