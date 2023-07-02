@@ -69,8 +69,11 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
 
         return self._counter
     
-    def _to_gantry(self):
-        pass 
+    def _to_gantry(self, input_image_url, output_text, feedback):
+        inputs = {"image": input_image_url}
+        outputs = {"output_text": output_text}
+
+        gantry.log_record(self.application, self.version, inputs=inputs, outputs=outputs, feedback=feedback)
     
     def _to_s3(self, image_bytes, key=None, filetype=None):
         if key is None:
