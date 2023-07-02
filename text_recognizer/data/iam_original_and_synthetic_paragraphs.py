@@ -1,0 +1,1 @@
+"""IAM Original and Synthetic Paragraphs Dataset class."""
