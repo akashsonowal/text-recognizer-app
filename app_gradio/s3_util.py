@@ -49,6 +49,21 @@ def make_unique_bucket_name(prefix, seed):
     name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
     return prefix + "-" + name
 
+def get_url_of(bucket, key=None):
+    pass 
+
+def get_uri_of(bucket, key=None):
+    pass 
+
+def enable_bucket_versioning(bucket):
+    pass 
+
+def add_access_policy(bucket):
+    pass 
+
+def _get_policy(bucket):
+    pass
+
 def make_identifier(byte_data):
     """Create a unique identifier for a collection of bytes via hashing."""
     # feed them to hashing algo -- security is not critical here, so we use SHA-1
