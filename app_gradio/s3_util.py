@@ -36,8 +36,15 @@ def _create_bucket(name):
 
     return name, bucket_reponse
 
+def _format_url(bucket_name, region, key=None):
+    key = key or ""
+    url = S3_URL_FORMAT.format(bucket=bucket_name, region=region, key=key)
+    return url
 
-
+def _format_uri(bucket_name, key=None):
+    key = key or ""
+    uri = S3_URI_FORMAT.format(bucket=bucket_name, key=key)
+    return uri
 
 
 
