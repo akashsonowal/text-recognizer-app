@@ -50,10 +50,25 @@ def make_unique_bucket_name(prefix, seed):
     return prefix + "-" + name
 
 def get_url_of(bucket, key=None):
-    pass 
+    """Returns the url of a bucket and optionally of an object in that bucket."""
+    if not isinstance(bucket, str):
+        bucket = bucket.name 
+    region = _get_region(bucket)
+    key = key or ""
+
+    url = _format_url(bucket, region, key)
+    return url
 
 def get_uri_of(bucket, key=None):
-    pass 
+    """Returns the s3:// uri of a bucket and optionally of an object in that bucket."""
+    if not isinstance(bucket, str):
+        bucket = bucket.name 
+    
+    key = key or ""
+
+    uri = _format_uri(bucket, key)
+
+    return uri
 
 def enable_bucket_versioning(bucket):
     """Turns on versioning for bucket contents, which avoids deletion."""
