@@ -49,7 +49,16 @@ def make_unique_bucket_name(prefix, seed):
     name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
     return prefix + "-" + name
 
-def _get_s3_region(bucket):
+def make_identifier(byte_data):
+    """Create a unique identifier for a collection of bytes via hashing."""
+    # feed them to hashing algo -- security is not critical here, so we use SHA-1
+    hashed_data = hashlib.sha1(byte_data) # noqa: S3
+    identifier = hashed_data.hexdigest() # turn it into hexdecimal
+
+    return identifier
+
+
+def _get_region(bucket):
     """Determine the region of an s3 bucket."""
     if not isinstance(bucket, str):
         bucket = bucket.name 
