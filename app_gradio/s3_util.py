@@ -44,7 +44,6 @@ def make_key(fileobj, filetype=None):
     else:
         return identifier + "." + filetype
 
-
 def make_unique_bucket_name(prefix, seed):
     """Creates a unique bucket name from a prefix and a seed."""
     name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
@@ -70,7 +69,3 @@ def _format_uri(bucket_name, key=None):
     key = key or ""
     uri = S3_URI_FORMAT.format(bucket=bucket_name, key=key)
     return uri
-
-
-
-
