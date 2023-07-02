@@ -48,6 +48,14 @@ def convert_y_label_to_string(y: torch.Tensor, mapping: Sequence[str], ignore_to
     return "".join([mapping[i] for i in y if i not in ignore_tokens])
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument(
+        "filename",
+        type=str,
+        help="Name for an image file. This can be a local path, a URL, a URI from AWS/GCP/Azure storage, an HDFS path, or any other resource locator supported by the smart_open library.",
+    )
+    args = parser.parse_args()
+    
     text_recognizer = ParagraphTextRecognizer()
     pred_str = text_recognizer.predict(args.filename)
     print(pred_str)
