@@ -36,6 +36,15 @@ def _create_bucket(name):
 
     return name, bucket_reponse
 
+def make_key(fileobj, filetype=None):
+    """Creates a unique key for the fileobj and optionally append the filetype."""
+    identifier = make_identifier(fileobj)
+    if filetype is None:
+        return identifier
+    else:
+        return identifier + "." + filetype
+
+
 def make_unique_bucket_name(prefix, seed):
     """Creates a unique bucket name from a prefix and a seed."""
     name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
