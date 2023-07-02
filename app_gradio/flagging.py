@@ -62,8 +62,21 @@ class GantryImageToTextLogger(gr.FlaggingCallback):
     def _to_s3(self):
         pass 
     
-    def _find_image_and_text_components():
-        pass 
+    def _find_image_and_text_components(self, components: List[Component]):
+        image_component_idx, text_component_idx = None, None
+
+        for idx, component in enumerate(components):
+            if isinstance(component, (gr.Inputs.Image, gr.components.Image)):
+                image_component_idx = idx 
+            if isinstance(component, (gr.templates.Text, gr.components.Text)):
+                text_component_idx = idx 
+        
+        if image_component_idx is None:
+            raise RuntimeError(f"No image input found in gradio interface with components {components}")
+        elif text_component_idx is None:
+            raise RuntimeError(f"No text output found in gradio interface with components {components}")
+
+        return image_component_idx, text_component_idx
 
 def get_api_key() -> Optional[str]:
     """Convenience method for fetching the Gantry API key."""
