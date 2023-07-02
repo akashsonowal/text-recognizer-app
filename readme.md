@@ -1,4 +1,4 @@
-# text-recognizer-app [OCR application for handwritten paragraphs (full stack MLOps)]
+# [Full stack MLOps] text-recognizer-app
 
 Note: This repo is a full clone of the fsdl text recognizer app. All credit goes to fsdl. I have cloned this repo for my own learning exercise. It contains the complete project end-to-end.
 
