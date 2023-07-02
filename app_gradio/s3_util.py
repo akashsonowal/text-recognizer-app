@@ -41,6 +41,17 @@ def make_unique_bucket_name(prefix, seed):
     name = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
     return prefix + "-" + name
 
+def _get_s3_region(bucket):
+    """Determine the region of an s3 bucket."""
+    if not isinstance(bucket, str):
+        bucket = bucket.name 
+    
+    s3_client = boto3.client("s3")
+    bucket_location_response = s3_client.get_bucket_location(Bucket=bucket)
+    bucket_location = bucket_location_response["LocationConstraint"]
+
+    return bucket_location
+
 def _format_url(bucket_name, region, key=None):
     key = key or ""
     url = S3_URL_FORMAT.format(bucket=bucket_name, region=region, key=key)
