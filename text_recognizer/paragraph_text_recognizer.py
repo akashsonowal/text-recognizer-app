@@ -22,7 +22,12 @@ STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent / "artifacts" / "paragrap
 MODEL_FILE = "model.pt"
 
 class ParagraphTextRecognizer():
-    def __init__(self):
+    """Recognizes a paragraph of text in an image."""
+    def __init__(self, model_path=None):
+        if model_path is None:
+            model_path = STAGED_MODEL_DIRNAME / MODEL_FILE
+        self.model = torch.jit.load(model_path)
+        
         pass 
     
     def predict(self):
