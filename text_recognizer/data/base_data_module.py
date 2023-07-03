@@ -58,7 +58,19 @@ class BaseDataModule(pl.LightningDataModule):
     self.on_gpu = isinstance(self.args.get("gpus", None), (str, int))
 
     self.input_dims: Tuple[int, ...]
-    
+    self.output_dims: Tuple[int, ...]
+    self.mapping: Collection
+    self.data_train: Union[BaseDataset, ConcatDataset]
+    self.data_val: Union[BaseDataset, ConcatDataset]
+    self.data_test: Union[BaseDataset, ConcatDataset]
+  
+  @classmethod
+  def data_dirname(cls):
+    return metadata.DATA_DIRNAME
+  
+  
+
+
   
   def config():
     pass 
