@@ -1,9 +1,15 @@
-import text_recognizer.metadata.shared as shared 
+import text_recognizer.metadata.emnist as emnist
+import text_recognizer.metadata.shared as shared
 
-RAW_DATA_DIRNAME = shared.DATA_DIRNAME / "raw" / "iam"
-METADATA_FILENAME = RAW_DATA_DIRNAME /  "metadata.toml"
-DL_DATA_DIRNAME = shared.DATA_DIRNAME / "downloaded" / "iam"
-EXTRACTED_DATASET_DIRNAME = DL_DATA_DIRNAME / "iamdb"
+PROCESSED_DATA_DIRNAME = shared.DATA_DIRNAME / "processed" / "iam_lines"
 
-IMAGE_SCALE_FACTOR = 2  # if images were downsampled, the regions must also be
-LINE_REGION_PADDING = 8 # add this many pixels around the exact coordinates
+IMAGE_SCALE_FACTOR = 2
+
+CHAR_WIDTH = emnist.INPUT_SHAPE[0] // IMAGE_SCALE_FACTOR # rough estimate
+IMAGE_HEIGHT = 112 // IMAGE_SCALE_FACTOR
+IMAGE_WIDTH = 3072 // IMAGE_SCALE_FACTOR # rounding up IAMLines empirical maximum width
+
+DIMS = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
+OUTPUT_DIMS = (89, 1)
+
+MAPPING = emnist.MAPPING
