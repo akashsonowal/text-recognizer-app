@@ -49,9 +49,10 @@ def split_and_validate_b64_string():
 def encode_b64_image():
   pass 
 
-def compute_sha256():
+def compute_sha256(filename: Union[Path, str]):
   """Return SHA256 checksum of a file."""
-  pass 
+  with open(filename, "rb") as f:
+    return hashlib.sha256(f.read()).hexdigest()
 
 class TqdmUpTo():
   pass
