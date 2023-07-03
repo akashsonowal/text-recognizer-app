@@ -51,11 +51,18 @@ class BaseDataModule(pl.LightningDataModule):
   """
   def __init__(self, args: argparse.Namespace = None) -> None:
     super().__init__()
-    self.args = vars(args)
+    self.args = vars(args) if args is not None else {}
+    self.batch_size = self.args.get("batch_size", BATCH_SIZE)
+    self.num_workers = self.args.get("num_workers", DEFAULT_NUM_WORKERS)
+
+    self.on_gpu = isinstance(self.args.get("gpus", None), (str, int))
+
+    self.input_dims: Tuple[int, ...]
+    
   
   def config():
     pass 
-    
+
   def prepare_data():
     pass 
 
