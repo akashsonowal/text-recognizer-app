@@ -40,7 +40,12 @@ def temporary_working_directory(working_dir: Union[str, Path]):
   finally:
     os.chdir(curdir)
 
-def read_b64_image():
+def read_b64_image(b64_string, grayscale=False):
+  """Load base64-encoded images."""
+  try:
+    image_file = read_b64_string(b64_string)
+    return read_image_pil_file(image_file, grayscale)
+  except Exception as exception 
   pass 
 
 def read_b64_string():
