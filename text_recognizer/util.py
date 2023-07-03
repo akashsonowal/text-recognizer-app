@@ -70,7 +70,11 @@ def split_and_validate_b64_string(b64_string):
   data_type = header.split(";")[0].split(":")[1]
   return data_type, data
 
-def encode_b64_image():
+def encode_b64_image(image, format="png"):
+  """Encode a PIL image as a base64 string."""
+  _buffer = BytesIO() # bytes that live in memory
+  
+
   pass 
 
 def compute_sha256(filename: Union[Path, str]):
