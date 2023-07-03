@@ -57,8 +57,10 @@ def read_b64_string(b64_string, return_data_type=False):
   else:
     return b64_buffer 
 
-def get_b64_filetype():
-  pass 
+def get_b64_filetype(data_header):
+  """Retrieves the filetype information from the data type header of a base64-encoded object."""
+  _, file_type = data_header.split("/")
+  return file_type
 
 def split_and_validate_b64_string(b64_string):
   """Return the data_type and data of a b64 string, with validation."""
