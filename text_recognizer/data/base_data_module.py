@@ -88,10 +88,13 @@ class BaseDataModule(pl.LightningDataModule):
     """Return important settings of the dataset, which will be passed to instantiate models."""
     return {"input_dims": self.input_dims, "outptu_dims": self.output_dims, "mapping": self.mapping}
 
-  def prepare_data(self, *args, **kwargs):
-    
-    pass 
+  def prepare_data(self, *args, **kwargs) -> None:
+     """Take the first steps to prepare data for use.
 
+    Use this method to do things that might write to disk or that need to be done only from a single GPU
+    in distributed settings (so don't set state `self.x = y`).
+    """
+    
   def setup():
     pass
   
