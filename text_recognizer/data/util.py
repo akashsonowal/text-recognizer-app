@@ -28,7 +28,7 @@ class BaseDataset(torch.utils.data.Dataset):
       data: SequenceOrTensor,
       targets: SequenceOrTensor,
       transform: Callable = None,
-      target_transfrom: Callabel = None,
+      target_transform: Callable = None,
   ) -> None:
       if len(data) != len(targets):
         raise ValueError("Data and targets must be of equal length")
@@ -64,8 +64,18 @@ class BaseDataset(torch.utils.data.Dataset):
       
       return datum, target
    
-def convert_strings_to_labels():
-  pass
+def convert_strings_to_labels(strings: Sequence[str], mapping: Dict[str, int], length: int) -> torch.Tensor:
+  """
+  Convert sequence of N strings to a (N, length) ndarray, with each string wrapped with <S> and <E> tokens,
+  and padded with the <P> token.
+  """
+  labels = torch.ones((len(strings), length), dtype=torch.long) * mapping["<P>"]
+  for i, string in enumerate(strings):
+    tokens = list(string)
+    tokens = ["<S>", tokens, "<E>"]
+    for ii, token inn enumerate(tokens):
+      labels[i, ii] = mapping[token]
+  return labels 
 
 def split_dataset():
   pass
