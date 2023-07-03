@@ -50,6 +50,7 @@ def encode_b64_image():
   pass 
 
 def compute_sha256():
+  """Return SHA256 checksum of a file."""
   pass 
 
 class TqdmUpTo():
