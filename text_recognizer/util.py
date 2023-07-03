@@ -48,8 +48,14 @@ def read_b64_image(b64_string, grayscale=False):
   except Exception as exception:
     raise ValueError("Could not load image from b64 {}: {}".format(b64_string, exception)) from exception
 
-def read_b64_string():
-  pass 
+def read_b64_string(b64_string, return_data_type=False):
+  """Read a base64-encoded string into an in-memory file-like object."""
+  data_header, b64_data = split_and_validate_b64_string(b64_string)
+  b64_buffer = BytesIO(base64.b64decode(b64_data))
+  if return_data_type:
+    return get_b64_filetype(data_header), b64_buffer
+  else:
+    return b64_buffer 
 
 def get_b64_filetype():
   pass 
