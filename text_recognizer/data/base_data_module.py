@@ -103,7 +103,13 @@ class BaseDataModule(pl.LightningDataModule):
     """
   
   def train_dataloader(self):
-    pass 
+    return DataLoader(
+      self.data_train,
+      shuffle=True,
+      batch_size=self.batch_size,
+      num_workers=self.num_workers,
+      pin_memory=self.on_gpu,
+    )
   
   def val_dataloader(self):
     pass 
