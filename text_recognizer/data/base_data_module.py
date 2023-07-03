@@ -94,9 +94,13 @@ class BaseDataModule(pl.LightningDataModule):
     Use this method to do things that might write to disk or that need to be done only from a single GPU
     in distributed settings (so don't set state `self.x = y`).
     """
-    
-  def setup():
-    pass
+
+  def setup(self, Optional[str] = None) -> None:
+    """Perform final setup to prepare data for consumption by DataLoader.
+
+    Here is where we typically split into train, validation, and test. This is done once per GPU in a DDP setting.
+    Should assign `torch Dataset` objects to self.data_train, self.data_val, and optionally self.data_test.
+    """
   
   def train_dataloader(self):
     pass 
