@@ -60,8 +60,13 @@ def read_b64_string(b64_string, return_data_type=False):
 def get_b64_filetype():
   pass 
 
-def split_and_validate_b64_string():
-  pass 
+def split_and_validate_b64_string(b64_string):
+  """Return the data_type and data of a b64 string, with validation."""
+  header, data = b64_string.split(",", 1)
+  assert header.startswith("data:")
+  assert header.endswith(";base64")
+  data_type = header.split(";")[0].split(":")[1]
+  return data_type, data
 
 def encode_b64_image():
   pass 
