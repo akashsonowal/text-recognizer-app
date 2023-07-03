@@ -45,8 +45,8 @@ def read_b64_image(b64_string, grayscale=False):
   try:
     image_file = read_b64_string(b64_string)
     return read_image_pil_file(image_file, grayscale)
-  except Exception as exception 
-  pass 
+  except Exception as exception:
+    raise ValueError("Could not load image from b64 {}: {}".format(b64_string, exception)) from exception
 
 def read_b64_string():
   pass 
