@@ -141,7 +141,12 @@ def main():
     )
 
     summary_callback = pl.callbacks.ModelSummary(max_depths=2)
-    
+
+    callbacks = [summary_callback, checkpoint_callback]
+
+    if args.wandb:
+      logger = pl.loggers.WandbLogger(log_model="all", save_dir=str(log_dir), job_type="train")
+
     
 
 
