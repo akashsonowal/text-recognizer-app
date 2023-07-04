@@ -67,9 +67,13 @@ def _setup_parser():
   data_class = import_class(f"{DATA_CLASS_MODULE}.{temp_args.data_class}")
   model_class = import_class(f"{MODEL_CLASS_MODULE}.{temp_args.model_class}")
 
+  data_group = parser.add_argument_group("Data Args")
+  data_class.add_to_argparse(data_group)
+
+  model_group = parser.add_argument_group("Model Args")
+  model_class.add_to_argparse(model_group)
   
-
-
+  return parser
 
 @rank_zero_only
 def _ensure_logging_dir(experiment_dir):
