@@ -23,6 +23,46 @@ def _setup_parser():
   parser = argparse.ArgumentParser(add_help=False, parents=[trainer_parser])
   parser.set_defaults(max_epochs=1)
 
+  parser.add_argument(
+    "--wandb",
+    action="store_true",
+    default=False,
+    help="If passed, logs experiment results to Weights & Biases. Otherwise logs only to local Tensorboard.",
+  )
+
+  parser.add_argument(
+    "--profile",
+    action="store_true",
+    default=False,
+    help="If passed, uses the PyTorch Profiler to track computation, exported as a Chrome-style trace.",
+  )
+
+  parser.add_argument(
+    "--data_class",
+    type=str,
+    default="MNIST",
+    help=f"String identifier for the data class, relative to {DATA_CLASS_MODULE}.",
+  )
+
+  parser.add_argument(
+    "--model_class",
+    type=str,
+    default="MLP",
+    help=f"String identifier for the model class, relative to {MODEL_CLASS_MODULE}.",
+  )
+
+  parser.add_argument(
+    "--load_checkpoint", type=str, default=None, help="If passed, loads a model from the provided path."
+  )
+
+  parser.add_argument(
+    "--stop_early",
+    type=int,
+    default=0,
+    help="If non-zero, applies early stopping, with the provided value as the 'patience' argument."
+    + " Default is 0.",
+  )
+
 @rank_zero_only
 def _ensure_logging_dir(experiment_dir):
   """Create the logging directory via the rank-zero process, if necessary."""
