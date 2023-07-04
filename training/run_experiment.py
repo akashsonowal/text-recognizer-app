@@ -63,6 +63,14 @@ def _setup_parser():
     + " Default is 0.",
   )
 
+  temp_args = parser.parse_known_args()
+  data_class = import_class(f"{DATA_CLASS_MODULE}.{temp_args.data_class}")
+  model_class = import_class(f"{MODEL_CLASS_MODULE}.{temp_args.model_class}")
+
+  
+
+
+
 @rank_zero_only
 def _ensure_logging_dir(experiment_dir):
   """Create the logging directory via the rank-zero process, if necessary."""
