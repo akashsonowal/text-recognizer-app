@@ -139,6 +139,9 @@ def main():
       dirpath=experiment_dir,
       every_n_epochs=args.check_val_every_n_epoch,
     )
+
+    summary_callback = pl.callbacks.ModelSummary(max_depths=2)
+    
     
 
 
