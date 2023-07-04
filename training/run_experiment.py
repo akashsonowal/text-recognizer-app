@@ -163,6 +163,11 @@ def main():
     trainer = pl.Trainer.from_argparse_args(args, callbacks=callbacks, logger=logger)
     
     if args.profile:
+      sched = torch.profiler.schedule(wait=0, warmup=3, active=4, repeat=0)
+      profiler = pl.profiler.PyTorchProfiler(export_to_chrome=True, schedule=sched, dirpath=experiment_dir)
+      profiler.STEP_FUNCTIONS = {"training_steps"} # only profile training
+    else:
+      profiler = pl.profiler.PassThroughProfiler()
 
 
     
