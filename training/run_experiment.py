@@ -130,6 +130,16 @@ def main():
     if goldstar_metric == "validation/cer":
       filename_format += "-validation.cer={validation/cer:.3f}"
     
+    checkpoint_callback = pl.callbacks.ModelCheckpoint(
+      save_top_k=5,
+      filename=filename_format,
+      monitor=goldstar_metric,
+      mode="min",
+      auto_insert_metric_name=False,
+      dirpath=experiment_dir,
+      every_n_epochs=args.check_val_every_n_epoch,
+    )
+    
 
 
 if __name__ == "__main__":
