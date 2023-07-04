@@ -105,7 +105,21 @@ def main():
     ```
     python training/run_experiment.py --model_class=MLP --data_class=MNIST --help
     """
-  pass
+    parser = _setup_parser()
+    args = parser.parse_args()
+    data, model = setup_data_and_model_from_args(args)
+
+    lit_model_class = lit_models.BaseLitModel
+
+    if args.loss == "Transformer":
+      lit_model_class = lit_models.TransformerLitModel
+    
+    if args.load_checkpoint is not None:
+      lit_model = lit_model_class.load_from_checkpoint(args.load_checkpoint, args=args, model=model)
+    else:
+      lit_model = lit_model_class(args=args, model=model)
+    
+
 
 if __name__ == "__main__":
   main()
