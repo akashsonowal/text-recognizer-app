@@ -119,6 +119,17 @@ def main():
     else:
       lit_model = lit_model_class(args=args, model=model)
     
+    log_dir = Path("training") / "logs"
+    _ensure_logging_dir(log_dir)
+    logger = pl.loggers.TensorBoardLogger(log_dir)
+    experiment_dir = logger.log_dir
+
+    goldstar_metric = "validation/cer" if args.loss in {"transformer",} else "validation/loss"
+    filename_format = "epoch={epoch:04d}-validation.loss={validation/loss:.3f}"
+
+    if goldstar_metric == "validation/cer":
+      filename_format += "-validation.cer={validation/cer:.3f}"
+    
 
 
 if __name__ == "__main__":
