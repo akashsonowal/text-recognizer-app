@@ -18,6 +18,8 @@ torch.manual_seed(42)
 def _setup_parser():
   """Set up Python's ArgumentParser with data, model, trainer, and other arguments."""
   parser = argparse.ArgumentParser(add_help=False)
+  trainer_parser = pl.Trainer.add_argparse_args(parser)
+  
 
 def main():
     """
