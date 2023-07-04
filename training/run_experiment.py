@@ -146,6 +146,24 @@ def main():
 
     if args.wandb:
       logger = pl.loggers.WandbLogger(log_model="all", save_dir=str(log_dir), job_type="train")
+      logger.watch(model, log_freq=max(100, args.log_every_n_steps))
+      logger.log_hyperparams(vars(args))
+      experiment_dir = logger.experiment.dir 
+    callbacks += [cb.ModelSizeLogger(), cb.LearningRateMonitor()]
+
+    if args.stop_early:
+      early_stopping_callback = pl.callbacks.EarlyStopping(
+        monitor="validation/loss", mode="min", patience=args.stop_early
+      )
+      callbacks.append(early_stopping_callback)
+    
+    if args.wandb and args.loss in ("transformer,"):
+      callbacks.append(cb.ImgeToTextLogger())
+    
+    trainer = pl.Trainer.from_argparse_args(args, callbacks=callbacks, logger=logger)
+    
+    if args.profile:
+
 
     
 
