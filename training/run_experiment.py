@@ -19,7 +19,14 @@ def _setup_parser():
   """Set up Python's ArgumentParser with data, model, trainer, and other arguments."""
   parser = argparse.ArgumentParser(add_help=False)
   trainer_parser = pl.Trainer.add_argparse_args(parser)
-  
+  trainer_parser._action_groups[1].title = "Trainer Args"
+  parser = argparse.ArgumentParser(add_help=False, parents=[trainer_parser])
+  parser.set_defaults(max_epochs=1)
+
+@rank_zero_only
+def _ensure_logging_dir(experiment_dir):
+  """Create the logging directory via the rank-zero process, if necessary."""
+  Path(experiment_dir).mkdir(parents=True, exist_ok=True)
 
 def main():
     """
