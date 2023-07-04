@@ -168,10 +168,24 @@ def main():
       profiler.STEP_FUNCTIONS = {"training_steps"} # only profile training
     else:
       profiler = pl.profiler.PassThroughProfiler()
-
-
     
+    trainer.profiler = profiler
 
+    trainer.tune(lit_model, datamodule=data) # If passing --auto_lr_find, this will set learning rate
+    trainer.fit(lit_model, datamodule=data)
+
+    trainer.profiler = pl.profiler.PassThroughProfiler() # turn profiling off during testing
+
+    best_model_path = checkpoint_callback.best_model_path
+    if best_model_path:
+      rank_zero_info(f"Best model saved at: {best_model_path}")
+
+      if args.wandb:
+        rank_zero_info("Best model also uploaded to W&B ")
+      
+      trainer.test(datamodule=data, ckpt_path=best_model_path)
+    else:
+      trainer.test(lit_model, datamodule=data)
 
 if __name__ == "__main__":
   main()
