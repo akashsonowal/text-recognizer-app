@@ -1,1 +1,5 @@
-
+.git
+.*_cache
+data
+**/logs
+**/lightning_logs
