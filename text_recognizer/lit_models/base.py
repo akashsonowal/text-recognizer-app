@@ -5,10 +5,7 @@ import pytorch_lightning as pl
 import torch
 from torchmetrics import Accuracy
 
-# Hide lines below until Lab 03
 from .metrics import CharacterErrorRate
-
-# Hide lines above until Lab 03
 
 
 OPTIMIZER = "Adam"
@@ -80,9 +77,7 @@ class BaseLitModel(pl.LightningModule):
         self.log("train/acc", self.train_acc, on_step=False, on_epoch=True)
 
         outputs = {"loss": loss}
-        # Hide lines below until Lab 04
         self.add_on_first_batch({"logits": logits.detach()}, outputs, batch_idx)
-        # Hide lines above until Lab 04
 
         return outputs
 
@@ -101,9 +96,7 @@ class BaseLitModel(pl.LightningModule):
         self.log("validation/acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
 
         outputs = {"loss": loss}
-        # Hide lines below until Lab 04
         self.add_on_first_batch({"logits": logits.detach()}, outputs, batch_idx)
-        # Hide lines above until Lab 04
 
         return outputs
 
@@ -114,7 +107,6 @@ class BaseLitModel(pl.LightningModule):
         self.log("test/loss", loss, on_step=False, on_epoch=True)
         self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)
 
-    # Hide lines below until Lab 04
     def add_on_first_batch(self, metrics, outputs, batch_idx):
         if batch_idx == 0:
             outputs.update(metrics)
@@ -129,9 +121,6 @@ class BaseLitModel(pl.LightningModule):
         else:
             return self.trainer._logger_connector.should_update_logs
 
-
-# Hide lines above until Lab 04
-# Hide lines below until Lab 03
 class BaseImageToTextLitModel(BaseLitModel):  # pylint: disable=too-many-ancestors
     """Base class for ImageToText models in PyTorch Lightning."""
 
@@ -148,6 +137,3 @@ class BaseImageToTextLitModel(BaseLitModel):  # pylint: disable=too-many-ancesto
         self.ignore_tokens = [self.start_index, self.end_index, self.padding_index]
         self.val_cer = CharacterErrorRate(self.ignore_tokens)
         self.test_cer = CharacterErrorRate(self.ignore_tokens)
-
-
-# Hide lines above until Lab 03
