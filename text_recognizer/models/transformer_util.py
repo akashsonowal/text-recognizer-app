@@ -24,7 +24,7 @@ class PositionalEncodingImage(nn.Module):
 
     @staticmethod
     def make_pe(d_model: int, max_h: int, max_w: int) -> torch.Tensor:
-        pe_h = PositionalEncoding.make_pe(d_model=d_model // 2, max_len=max_h)  # (max_h, 1 d_model // 2)
+        pe_h = PositionalEncoding.make_pe(d_model=d_model // 2, max_len=max_h)  # (max_h, 1, d_model // 2)
         pe_h = pe_h.permute(2, 0, 1).expand(-1, -1, max_w)  # (d_model // 2, max_h, max_w)
 
         pe_w = PositionalEncoding.make_pe(d_model=d_model // 2, max_len=max_w)  # (max_w, 1, d_model // 2)
@@ -55,23 +55,22 @@ class PositionalEncoding(torch.nn.Module):
     @staticmethod
     def make_pe(d_model: int, max_len: int) -> torch.Tensor:
         pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1) # (max_len, 1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model)) # 1 / denominator
+        pe[:, 0::2] = torch.sin(position * div_term) # even dim
+        pe[:, 1::2] = torch.cos(position * div_term) # odd dim
         pe = pe.unsqueeze(1)
-        return pe
+        return pe # (max_len, 1, d_model)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x.shape = (S, B, d_model)
         assert x.shape[2] == self.pe.shape[2]  # type: ignore
-        x = x + self.pe[: x.size(0)]  # type: ignore
+        x = x + self.pe[: x.size(0)]  # we want only till input seq length
         return self.dropout(x)
 
 
 def generate_square_subsequent_mask(size: int) -> torch.Tensor:
     """Generate a triangular (size, size) mask."""
-    mask = (torch.triu(torch.ones(size, size)) == 1).transpose(0, 1)
+    mask = (torch.triu(torch.ones(size, size)) == 1).transpose(0, 1) # lower triangle after transpose
     mask = mask.float().masked_fill(mask == 0, float("-inf")).masked_fill(mask == 1, float(0.0))
     return mask
-
