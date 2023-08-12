@@ -56,7 +56,7 @@ class LineCNNSimple(nn.Module):
         # Compute number of windows
         S = math.floor((W - self.WW) / self.WS + 1)
 
-        # NOTE: type_as properly sets device
+        # type_as properly sets device
         activations = torch.zeros((B, self.num_classes, S)).type_as(x)
         for s in range(S):
             start_w = self.WS * s
