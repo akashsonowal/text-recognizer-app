@@ -24,7 +24,7 @@ class MLP(nn.Module):
         self.args = vars(args) if args is not None else {}
         self.data_config = data_config
 
-        input_dim = np.prod(self.data_config["input_dims"])
+        input_dim = np.prod(self.data_config["input_dims"]) # inner product
         num_classes = len(self.data_config["mapping"])
 
         fc1_dim = self.args.get("fc1", FC1_DIM)
