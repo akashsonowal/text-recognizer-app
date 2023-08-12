@@ -50,7 +50,6 @@ class LineCNNTransformer(nn.Module):
 
         self.embedding = nn.Embedding(self.num_classes, self.dim)
         self.fc = nn.Linear(self.dim, self.num_classes)
-
         self.pos_encoder = PositionalEncoding(d_model=self.dim)
 
         self.y_mask = generate_square_subsequent_mask(self.max_output_length)
