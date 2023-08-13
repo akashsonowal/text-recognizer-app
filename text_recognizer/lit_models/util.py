@@ -35,12 +35,14 @@ def first_appearance(x: torch.Tensor, element: Union[int, float], dim: int = 1) 
     >>> first_appearance(torch.tensor([1, 2, 3]), 1, dim=0)
     tensor(0)
     """
-    if x.dim() > 2 or x.dim() == 0:
+    if x.dim() > 2 or x.dim() == 0: # returns the num of dim in x (2d or other)
         raise ValueError(f"only 1 or 2 dimensional Tensors allowed, got Tensor with dim {x.dim()}")
     matches = x == element
     first_appearance_mask = (matches.cumsum(dim) == 1) & matches
-    does_match, match_index = first_appearance_mask.max(dim)
-    first_inds = torch.where(does_match, match_index, x.shape[dim])
+    does_match, match_index = first_appearance_mask.max(dim) # max of a column; returns values and indices
+
+    does_match = does_match == 1 # converts it to bool tensor
+    first_inds = torch.where(does_match, match_index, x.shape[dim]) # whereever it is true put match_index value otherwise put x.shape[dim] value
     return first_inds
 
 
