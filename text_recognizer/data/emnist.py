@@ -104,7 +104,7 @@ def _process_raw_dataset(filename: str, dirname: Path):
         y_train = data["dataset"]["train"][0, 0]["labels"][0, 0] + NUM_SPECIAL_TOKENS
         x_test = data["dataset"]["test"][0, 0]["images"][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
         y_test = data["dataset"]["test"][0, 0]["labels"][0, 0] + NUM_SPECIAL_TOKENS
-        # NOTE that we add NUM_SPECIAL_TOKENS to targets, since these tokens are the first class indices
+        # Note that we add NUM_SPECIAL_TOKENS to targets, since these tokens are the first class indices
 
         if SAMPLE_TO_BALANCE:
             print("Balancing classes to reduce amount of data")
