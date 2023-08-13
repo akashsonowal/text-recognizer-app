@@ -14,6 +14,6 @@ def test_iam_data_splits():
     """Fails when any identifiers are shared between training, test, or validation."""
     iam = IAM()
     iam.prepare_data()
-    assert not set(iam.train_ids) & set(iam.validation_ids)
+    assert not set(iam.train_ids) & set(iam.validation_ids) # checks overlap
     assert not set(iam.train_ids) & set(iam.test_ids)
     assert not set(iam.validation_ids) & set(iam.test_ids)
