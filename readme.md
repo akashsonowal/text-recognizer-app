@@ -24,4 +24,6 @@ Set PYTHONPATH
 echo "export PYTHONPATH=.:$PYTHONPATH" >> ~/.bashrc
 ```
 ### 3. Setup and prepare data
-- EMNIST: The raw data is a .mat file which is processed to .h5 file. The metadata file is downloaded in a .toml file.
+- For all datasets, the metadata was provided in "data/raw/*"
+- EMNIST: The data is downloaded (by matching the sha256) to a "data/emnist/downloaded/matlab.zip" which has a *.mat file which is processed (class balancing and augment characters) to a .h5 file.
+- 
