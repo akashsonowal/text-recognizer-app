@@ -34,7 +34,7 @@ class BaseDataset(torch.utils.data.Dataset):
         raise ValueError("Data and targets must be of equal length")
       super().__init__()
       self.data = data
-      self.target = target
+      self.targets = targets
       self.transform = transform
       self.target_transform = target_transform
       
