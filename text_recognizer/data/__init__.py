@@ -14,7 +14,7 @@ from .base_data_module import BaseDataModule
 from .mnist import MNIST
 
 from .emnist import EMNIST
-from .emnist_lines import EMINSTLines
+from .emnist_lines import EMNISTLines
 
 from .iam_lines import IAMLines
 from .iam_paragraphs import IAMParagraphs
