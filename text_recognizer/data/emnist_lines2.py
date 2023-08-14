@@ -181,7 +181,7 @@ def get_samples_by_char(samples, labels, mapping):
     return samples_by_char
 
 
-def select_letter_samples_for_string(string, samples_by_char):
+def select_letter_samples_for_string(string, samples_by_char): # select the images
     zero_image = torch.zeros((28, 28), dtype=torch.uint8)
     sample_image_by_char = {}
     for char in string:
