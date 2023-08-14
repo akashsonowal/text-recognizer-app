@@ -43,9 +43,9 @@ class EMNISTLines(BaseDataModule):
         self.with_start_end_tokens = self.args.get("with_start_end_tokens", False)
 
         self.mapping = metadata.MAPPING
-        self.output_dims = (self.max_length, 1)
+        self.output_dims = (self.max_length, 1) # (32, 1) i.e, 32 character lines
         max_width = metadata.CHAR_WIDTH * self.max_length
-        self.input_dims = (*metadata.DIMS[:2], max_width)
+        self.input_dims = (*metadata.DIMS[:2], max_width) # (-1, 28, 32*28) = (-1, 28, 896)
 
         self.emnist = EMNIST()
 
@@ -83,7 +83,7 @@ class EMNISTLines(BaseDataModule):
         )
 
     def prepare_data(self, *args, **kwargs) -> None:
-        if self.data_filename.exists():
+        if self.data_filename.exists(): # we don't download so we generate data
             return
         np.random.seed(42)
         self._generate_data("train")
@@ -188,7 +188,7 @@ def construct_image_from_string(
     string: str, samples_by_char: dict, min_overlap: float, max_overlap: float, width: int
 ) -> torch.Tensor:
     overlap = np.random.uniform(min_overlap, max_overlap)
-    sampled_images = select_letter_samples_for_string(string, samples_by_char)
+    sampled_images = select_letter_samples_for_string(string, samples_by_char) # sampled images for each character
     H, W = sampled_images[0].shape
     next_overlap_width = W - int(overlap * W)
     concatenated_image = torch.zeros((H, width), dtype=torch.uint8)
@@ -200,10 +200,10 @@ def construct_image_from_string(
 
 
 def create_dataset_of_images(N, samples_by_char, sentence_generator, min_overlap, max_overlap, dims):
-    images = torch.zeros((N, dims[1], dims[2]))
+    images = torch.zeros((N, dims[1], dims[2])) # (N, 28, 896)
     labels = []
     for n in range(N):
-        label = sentence_generator.generate()
+        label = sentence_generator.generate() # generates the label string
         images[n] = construct_image_from_string(label, samples_by_char, min_overlap, max_overlap, dims[-1])
         labels.append(label)
     return images, labels
