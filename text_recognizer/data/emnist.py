@@ -46,8 +46,8 @@ class EMNIST(BaseDataModule):
         self.mapping = metadata.MAPPING
         self.inverse_mapping = {v: k for k, v in enumerate(self.mapping)}
         self.transform = ImageStem()
-        self.input_dims = metadata.DIMS
-        self.output_dims = metadata.OUTPUT_DIMS
+        self.input_dims = metadata.DIMS # (1, 28, 28)
+        self.output_dims = metadata.OUTPUT_DIMS # (1, )
 
     def prepare_data(self, *args, **kwargs) -> None:
         if not os.path.exists(PROCESSED_DATA_FILENAME):
