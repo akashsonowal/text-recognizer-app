@@ -6,5 +6,5 @@ Note: This repo is a full clone of the fsdl text recognizer app. All credit goes
 
 ## Usage
 ```
-$ git clone 
+$ git clone https://github.com/akashsonowal/text-recognizer-app.git
 ```
