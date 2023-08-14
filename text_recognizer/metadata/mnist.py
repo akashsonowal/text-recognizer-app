@@ -1,5 +1,5 @@
 """Metadata for the MNIST dataset."""
-from text_recognizer.metadata.shared as shared
+import text_recognizer.metadata.shared as shared
 
 DOWNLOADED_DATA_DIRNAME = shared.DOWNLOADED_DATA_DIRNAME
 
