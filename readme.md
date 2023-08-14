@@ -24,3 +24,4 @@ Set PYTHONPATH
 echo "export PYTHONPATH=.:$PYTHONPATH" >> ~/.bashrc
 ```
 ### 3. Setup and prepare data
+- EMNIST: The raw data is a .mat file which is processed to .h5 file. The metadata file is downloaded in a .toml file.
