@@ -205,7 +205,7 @@ def construct_image_from_string(
     for image in sampled_images:
         concatenated_image[:, x : (x + W)] += image
         x += next_overlap_width
-    return torch.minimum(torch.Tensor([255]), concatenated_image)
+    return torch.minimum(torch.Tensor([255]), concatenated_image) # clip pixel values at 255
 
 
 def create_dataset_of_images(N, samples_by_char, sentence_generator, min_overlap, max_overlap, dims):
@@ -216,7 +216,7 @@ def create_dataset_of_images(N, samples_by_char, sentence_generator, min_overlap
         crop = construct_image_from_string(label, samples_by_char, min_overlap, max_overlap, dims[-1])
         height = crop.shape[0]
         y1 = (metadata.IMAGE_HEIGHT - height) // 2
-        images[n, y1 : (y1 + height), :] = crop
+        images[n, y1 : (y1 + height), :] = crop # the line image is placed vertically from y1
         labels.append(label)
     return images, labels
 
