@@ -10,6 +10,7 @@ Note: This repo is a full clone of the fsdl text recognizer app. All credit goes
 git clone https://github.com/akashsonowal/text-recognizer-app.git && cd text-recognizer-app
 ```
 ### 2. Set up the Python environment
+Install python and CUDA 
 ```
 make conda-update
 conda activate text-recognizer-app
