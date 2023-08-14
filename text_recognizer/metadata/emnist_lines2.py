@@ -1,5 +1,5 @@
 import text_recognizer.metadata.emnist as emnist
-import text_recognizer.metdata.shared as shared 
+import text_recognizer.metadata.shared as shared 
 
 PROCESSED_DATA_DIRNAME = shared.DATA_DIRNAME / "processed" / "emnist_lines2"
 
