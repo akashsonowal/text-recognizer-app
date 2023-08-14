@@ -14,3 +14,11 @@ git clone https://github.com/akashsonowal/text-recognizer-app.git && cd text-rec
 make conda-update
 conda activate text-recognizer-app
 ```
+Install python packages
+```
+make pip-tools
+```
+Set PYTHONPATH
+```
+echo "export PYTHONPATH=.:$PYTHONPATH" >> ~/.bashrc
+```
