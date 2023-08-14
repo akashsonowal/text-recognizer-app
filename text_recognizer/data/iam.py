@@ -56,7 +56,7 @@ class IAM:
         relevant crop region data.
         """
         image = util.read_image_pil(self.form_filenames_by_id[id], grayscale=True)
-        image = ImageOps.invert(image)
+        image = ImageOps.invert(image) # colors are inverted i.e., white become dark.
         return image
 
     def __repr__(self):
