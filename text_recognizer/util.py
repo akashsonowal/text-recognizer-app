@@ -82,7 +82,7 @@ def compute_sha256(filename: Union[Path, str]):
   with open(filename, "rb") as f:
     return hashlib.sha256(f.read()).hexdigest()
 
-class TqdmUpTo():
+class TqdmUpTo(tqdm):
   """From https://github.com/tqdm/tqdm/blob/master/examples/tqdm_wget.py"""
 
   def update_to(self, blocks=1, bsize=1, tsize=None):
@@ -98,7 +98,7 @@ class TqdmUpTo():
     """
     if tsize is not None:
       self.total = tsize 
-    self.update(blocks * bsize - n)
+    self.update(blocks * bsize - self.n)
 
 def download_url(url, filename):
   """Download a file from url to filename, with a progress bar."""
