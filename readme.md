@@ -23,3 +23,4 @@ Set PYTHONPATH
 ```
 echo "export PYTHONPATH=.:$PYTHONPATH" >> ~/.bashrc
 ```
+### 3. Setup and prepare data
