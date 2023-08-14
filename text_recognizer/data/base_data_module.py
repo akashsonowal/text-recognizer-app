@@ -95,7 +95,7 @@ class BaseDataModule(pl.LightningDataModule):
     in distributed settings (so don't set state `self.x = y`).
     """
 
-  def setup(self, Optional[str] = None) -> None:
+  def setup(self, stage: Optional[str] = None) -> None:
     """Perform final setup to prepare data for consumption by DataLoader.
 
     Here is where we typically split into train, validation, and test. This is done once per GPU in a DDP setting.
