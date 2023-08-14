@@ -83,7 +83,7 @@ class EMNIST(BaseDataModule):
 
 
 def _download_and_process_emnist():
-    metadata = toml.load(METADATA_FILENAME)
+    metadata = toml.load(METADATA_FILENAME) # "metadata.toml"
     _download_raw_dataset(metadata, DL_DATA_DIRNAME)
     _process_raw_dataset(metadata["filename"], DL_DATA_DIRNAME)
 
