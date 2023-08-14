@@ -50,7 +50,7 @@ class EMNIST(BaseDataModule):
         self.output_dims = metadata.OUTPUT_DIMS # (1, )
 
     def prepare_data(self, *args, **kwargs) -> None:
-        if not os.path.exists(PROCESSED_DATA_FILENAME):
+        if not os.path.exists(PROCESSED_DATA_FILENAME): # h5 file
             _download_and_process_emnist()
 
     def setup(self, stage: str = None) -> None:
