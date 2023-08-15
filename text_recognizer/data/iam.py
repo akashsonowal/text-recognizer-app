@@ -233,7 +233,3 @@ def _get_region_from_xml_element(xml_elem: Any, xml_path: str) -> Optional[Dict[
         "x2": max(int(el.attrib["x"]) + int(el.attrib["width"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
         "y2": max(int(el.attrib["y"]) + int(el.attrib["height"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
     }
-
-
-if __name__ == "__main__":
-    load_and_print_info(IAM)
