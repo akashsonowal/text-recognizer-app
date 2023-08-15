@@ -76,7 +76,7 @@ class IAM:
         return sorted([f.stem for f in self.xml_filenames])
 
     @cachedproperty
-    def ids_by_split(self):
+    def ids_by_split(self): # page level ids
         return {"train": self.train_ids, "val": self.validation_ids, "test": self.test_ids}
 
     @cachedproperty
