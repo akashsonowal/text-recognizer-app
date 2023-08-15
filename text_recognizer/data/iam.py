@@ -165,7 +165,7 @@ def _get_ids_from_lwitlrt_split_file(filename: str) -> List[str]:
     with open(filename, "r") as f:
         line_ids_str = f.read()
     line_ids = line_ids_str.split("\n")
-    page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id})
+    page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id}) # page ids are only in the first 2 parts
     return page_ids
 
 
