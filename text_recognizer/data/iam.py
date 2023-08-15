@@ -228,10 +228,10 @@ def _get_region_from_xml_element(xml_elem: Any, xml_path: str) -> Optional[Dict[
     if not unit_elements:
         return None
     return {
-        "x1": min(int(el.attrib["x"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
-        "y1": min(int(el.attrib["y"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
-        "x2": max(int(el.attrib["x"]) + int(el.attrib["width"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
-        "y2": max(int(el.attrib["y"]) + int(el.attrib["height"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
+        "x1": min(int(el.attrib["x"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
+        "y1": min(int(el.attrib["y"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
+        "x2": max(int(el.attrib["x"]) + int(el.attrib["width"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
+        "y2": max(int(el.attrib["y"]) + int(el.attrib["height"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
     }
 
 
