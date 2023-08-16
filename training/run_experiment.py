@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path 
 
 import numpy as np 
-import pytorch_lighnting as pl 
+import pytorch_lightning as pl 
 from pytorch_lightning.utilities.rank_zero import rank_zero_info, rank_zero_only 
 import torch 
 
