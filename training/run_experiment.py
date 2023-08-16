@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np 
 import pytorch_lighnting as pl 
-from pytorch_lighnting.utilities.rank_zero import rank_zero_info, rank_zero_only 
+from pytorch_lightning.utilities.rank_zero import rank_zero_info, rank_zero_only 
 import torch 
 
 from text_recognizer import callbacks as cb
