@@ -12,7 +12,7 @@ from text_recognizer import callbacks as cb
 from text_recognizer import lit_models
 from training.util import DATA_CLASS_MODULE, import_class, MODEL_CLASS_MODULE, setup_data_and_model_from_args
 
-np.random_seed(42)
+np.random.seed(42)
 torch.manual_seed(42)
 
 def _setup_parser():
