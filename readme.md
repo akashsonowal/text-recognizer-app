@@ -33,6 +33,6 @@ echo "export PYTHONPATH=.:$PYTHONPATH" >> ~/.bashrc
 
 ## Results
 - Best Loss:
-  - train loss: 0.01; val loss: 0.02; test loss: 0.76
+  - train loss: 0.0103; val loss: 0.0208; test loss: 0.7666
 - Best cer:
-  - val cer: 0.02, test cer: 0.13
+  - val cer: 0.0247, test cer: 0.1293
