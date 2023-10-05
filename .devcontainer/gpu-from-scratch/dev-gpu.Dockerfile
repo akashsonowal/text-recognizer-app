@@ -19,7 +19,7 @@ RUN echo "\"\e[A\": history-search-backward" > $HOME/.inputrc && echo "\"\e[B\":
 WORKDIR /root
 
 # install core Python environment and system packages
-COPY ./Makefile ./environment.yml ./
+COPY ../Makefile ../environment.yml ./
 RUN make conda-update
 
 # switch to a login shell after cleaning up config:
@@ -30,7 +30,7 @@ RUN sed -i "s/conda activate base//" $HOME/.bashrc
 SHELL ["conda", "run", "--no-capture-output", "-n", "fsdl-text-recognizer-2022", "/bin/bash", "-c"]
 
 # install the core requirements, then remove build files
-COPY ./requirements ./requirements
+COPY ../requirements ./requirements
 RUN make pip-tools && rm -rf ./Makefile ./requirements ./environment.yml
 
 # add current dir to PYTHONPATH so libraries are importable
