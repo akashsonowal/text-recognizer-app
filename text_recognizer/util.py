@@ -62,7 +62,7 @@ def get_b64_filetype(data_header):
   _, file_type = data_header.split("/")
   return file_type
 
-def split_and_validate_b64_string(b64_string):
+def split_and_validate_b64_string(b64_string): # data:[<mediatype>][;base64],<data>
   """Return the data_type and data of a b64 string, with validation."""
   header, data = b64_string.split(",", 1)
   assert header.startswith("data:")
