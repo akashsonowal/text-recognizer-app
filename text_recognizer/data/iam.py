@@ -173,7 +173,11 @@ def _get_line_strings_from_xml_file(filename: str) -> List[str]:
     """Get the text content of each line. Note that we replace &quot; with "."""
     xml_line_elements = _get_line_elements_from_xml_file(filename)
     return [_get_text_from_xml_element(el) for el in xml_line_elements]
-
+    
+def _get_line_elements_from_xml_file(filename: str) -> List[Any]:
+    """Get all line xml elements from xml file."""
+    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
+    return xml_root_element.findall("handwritten-part/line")
 
 def _get_text_from_xml_element(xml_element: Any) -> str:
     """Extract text from any XML element."""
@@ -205,13 +209,6 @@ def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
         }
         for i, region in enumerate(line_regions)
     ]
-
-
-def _get_line_elements_from_xml_file(filename: str) -> List[Any]:
-    """Get all line xml elements from xml file."""
-    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
-    return xml_root_element.findall("handwritten-part/line")
-
 
 def _get_region_from_xml_element(xml_elem: Any, xml_path: str) -> Optional[Dict[str, int]]:
     """
