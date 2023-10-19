@@ -5,7 +5,7 @@ Note: This repo is a full clone of the fsdl text recognizer app. All credit goes
 
 ## Repo Structure
 - .aws/config - contains the configs for AWS CLI to access AWS resources
-- .devcontainer/ - different devcontainer.json for containerized development in VSCode
+- .devcontainer/ - different devcontainer.json for containerized development work in VSCode
   
 
 ## Usage
