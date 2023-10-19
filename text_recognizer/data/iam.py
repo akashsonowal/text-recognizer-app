@@ -69,6 +69,16 @@ class IAM:
         info.append(f"Total Lines: {num_lines}")
 
         return "\n\t".join(info)
+    
+    @property
+    def form_filenames(self) -> List[Path]:
+        """A list of the filenames of all .jpg files, which contain images of IAM forms."""
+        return list((EXTRACTED_DATASET_DIRNAME / "forms").glob("*.jpg"))
+
+    @property
+    def xml_filenames(self) -> List[Path]:
+        """A list of the filenames of all .xml files, which contain label information."""
+        return list((EXTRACTED_DATASET_DIRNAME / "xml").glob("*.xml"))
 
     @cachedproperty
     def all_ids(self):
@@ -96,23 +106,13 @@ class IAM:
     def test_ids(self):
         """A list of form IDs from the IAM Lines LWITLRT test set."""
         return _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/testset.txt")
-
-    @property
-    def xml_filenames(self) -> List[Path]:
-        """A list of the filenames of all .xml files, which contain label information."""
-        return list((EXTRACTED_DATASET_DIRNAME / "xml").glob("*.xml"))
-
+    
     @cachedproperty
     def validation_ids(self):
         """A list of form IDs from IAM Lines LWITLRT validation sets 1 and 2."""
         val_ids = _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset1.txt")
         val_ids.extend(_get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset2.txt"))
         return val_ids
-
-    @property
-    def form_filenames(self) -> List[Path]:
-        """A list of the filenames of all .jpg files, which contain images of IAM forms."""
-        return list((EXTRACTED_DATASET_DIRNAME / "forms").glob("*.jpg"))
 
     @property
     def xml_filenames_by_id(self):
