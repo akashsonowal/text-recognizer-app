@@ -1,5 +1,4 @@
-# helper module
-"""Class for loading the IAM handwritten text dataset, which encompasses both paragraphs and lines, plus utilities."""
+"""Class for loading the IAM handwritten text dataset, which encompasses both paragraphs and lines, plus utilities.""" # helper 
 from pathlib import Path
 from typing import Any, cast, Dict, List, Optional
 import zipfile
@@ -57,7 +56,7 @@ class IAM:
         relevant crop region data.
         """
         image = util.read_image_pil(self.form_filenames_by_id[id], grayscale=True)
-        image = ImageOps.invert(image) # colors are inverted i.e., white become dark.
+        image = ImageOps.invert(image)
         return image
 
     def __repr__(self):
@@ -70,49 +69,14 @@ class IAM:
         info.append(f"Total Lines: {num_lines}")
 
         return "\n\t".join(info)
-    
-    @property
-    def form_filenames(self) -> List[Path]:
-        """A list of the filenames of all .jpg files, which contain images of IAM forms."""
-        return list((EXTRACTED_DATASET_DIRNAME / "forms").glob("*.jpg"))
-
-    @property
-    def xml_filenames(self) -> List[Path]:
-        """A list of the filenames of all .xml files, which contain label information."""
-        return list((EXTRACTED_DATASET_DIRNAME / "xml").glob("*.xml"))
 
     @cachedproperty
     def all_ids(self):
         """A list of all form IDs."""
         return sorted([f.stem for f in self.xml_filenames])
-    
-    @cachedproperty
-    def train_ids(self):
-        """A list of form IDs which are in the IAM Lines LWITLRT training set."""
-        return list(set(self.all_ids) - (set(self.test_ids) | set(self.validation_ids)))
 
     @cachedproperty
-    def test_ids(self):
-        """A list of form IDs from the IAM Lines LWITLRT test set."""
-        return _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/testset.txt")
-    
-    @cachedproperty
-    def validation_ids(self):
-        """A list of form IDs from IAM Lines LWITLRT validation sets 1 and 2."""
-        val_ids = _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset1.txt")
-        val_ids.extend(_get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset2.txt"))
-        return val_ids
-    
-    def _get_ids_from_lwitlrt_split_file(filename: str) -> List[str]:
-        """Get the ids from Large Writer Independent Text Line Recognition Task (LWITLRT) data split file."""
-        with open(filename, "r") as f:
-            line_ids_str = f.read()
-        line_ids = line_ids_str.split("\n")
-        page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id}) # page ids are only in the first 2 parts
-        return page_ids
-
-    @cachedproperty
-    def ids_by_split(self): # page level ids
+    def ids_by_split(self):
         return {"train": self.train_ids, "val": self.validation_ids, "test": self.test_ids}
 
     @cachedproperty
@@ -122,6 +86,33 @@ class IAM:
         split_by_id.update({id_: "val" for id_ in self.validation_ids})
         split_by_id.update({id_: "test" for id_ in self.test_ids})
         return split_by_id
+
+    @cachedproperty
+    def train_ids(self):
+        """A list of form IDs which are in the IAM Lines LWITLRT training set."""
+        return list(set(self.all_ids) - (set(self.test_ids) | set(self.validation_ids)))
+
+    @cachedproperty
+    def test_ids(self):
+        """A list of form IDs from the IAM Lines LWITLRT test set."""
+        return _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/testset.txt")
+
+    @property
+    def xml_filenames(self) -> List[Path]:
+        """A list of the filenames of all .xml files, which contain label information."""
+        return list((EXTRACTED_DATASET_DIRNAME / "xml").glob("*.xml"))
+
+    @cachedproperty
+    def validation_ids(self):
+        """A list of form IDs from IAM Lines LWITLRT validation sets 1 and 2."""
+        val_ids = _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset1.txt")
+        val_ids.extend(_get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset2.txt"))
+        return val_ids
+
+    @property
+    def form_filenames(self) -> List[Path]:
+        """A list of the filenames of all .jpg files, which contain images of IAM forms."""
+        return list((EXTRACTED_DATASET_DIRNAME / "forms").glob("*.jpg"))
 
     @property
     def xml_filenames_by_id(self):
@@ -168,15 +159,21 @@ def _extract_raw_dataset(filename: Path, dirname: Path) -> None:
         with zipfile.ZipFile(filename, "r") as zip_file:
             zip_file.extractall()
 
+
+def _get_ids_from_lwitlrt_split_file(filename: str) -> List[str]:
+    """Get the ids from Large Writer Independent Text Line Recognition Task (LWITLRT) data split file."""
+    with open(filename, "r") as f:
+        line_ids_str = f.read()
+    line_ids = line_ids_str.split("\n")
+    page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id})
+    return page_ids
+
+
 def _get_line_strings_from_xml_file(filename: str) -> List[str]:
     """Get the text content of each line. Note that we replace &quot; with "."""
     xml_line_elements = _get_line_elements_from_xml_file(filename)
     return [_get_text_from_xml_element(el) for el in xml_line_elements]
-    
-def _get_line_elements_from_xml_file(filename: str) -> List[Any]:
-    """Get all line xml elements from xml file."""
-    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
-    return xml_root_element.findall("handwritten-part/line")
+
 
 def _get_text_from_xml_element(xml_element: Any) -> str:
     """Extract text from any XML element."""
@@ -209,6 +206,13 @@ def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
         for i, region in enumerate(line_regions)
     ]
 
+
+def _get_line_elements_from_xml_file(filename: str) -> List[Any]:
+    """Get all line xml elements from xml file."""
+    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
+    return xml_root_element.findall("handwritten-part/line")
+
+
 def _get_region_from_xml_element(xml_elem: Any, xml_path: str) -> Optional[Dict[str, int]]:
     """
     Get region from input xml element. The region is downsampled because the stored images are also downsampled.
@@ -224,8 +228,12 @@ def _get_region_from_xml_element(xml_elem: Any, xml_path: str) -> Optional[Dict[
     if not unit_elements:
         return None
     return {
-        "x1": min(int(el.attrib["x"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
-        "y1": min(int(el.attrib["y"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
-        "x2": max(int(el.attrib["x"]) + int(el.attrib["width"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
-        "y2": max(int(el.attrib["y"]) + int(el.attrib["height"]) for el in unit_elements) // metadata.IMAGE_SCALE_FACTOR,
+        "x1": min(int(el.attrib["x"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
+        "y1": min(int(el.attrib["y"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
+        "x2": max(int(el.attrib["x"]) + int(el.attrib["width"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
+        "y2": max(int(el.attrib["y"]) + int(el.attrib["height"]) for el in unit_elements) // metadata.DOWNSAMPLE_FACTOR,
     }
+
+
+if __name__ == "__main__":
+    load_and_print_info(IAM)
