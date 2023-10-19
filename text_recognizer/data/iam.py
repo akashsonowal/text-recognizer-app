@@ -1,3 +1,4 @@
+# helper module
 """Class for loading the IAM handwritten text dataset, which encompasses both paragraphs and lines, plus utilities."""
 from pathlib import Path
 from typing import Any, cast, Dict, List, Optional
