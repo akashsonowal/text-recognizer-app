@@ -167,10 +167,6 @@ def _extract_raw_dataset(filename: Path, dirname: Path) -> None:
         with zipfile.ZipFile(filename, "r") as zip_file:
             zip_file.extractall()
 
-
-
-
-
 def _get_line_strings_from_xml_file(filename: str) -> List[str]:
     """Get the text content of each line. Note that we replace &quot; with "."""
     xml_line_elements = _get_line_elements_from_xml_file(filename)
