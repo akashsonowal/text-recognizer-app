@@ -84,19 +84,7 @@ class IAM:
     def all_ids(self):
         """A list of all form IDs."""
         return sorted([f.stem for f in self.xml_filenames])
-
-    @cachedproperty
-    def ids_by_split(self): # page level ids
-        return {"train": self.train_ids, "val": self.validation_ids, "test": self.test_ids}
-
-    @cachedproperty
-    def split_by_id(self):
-        """A dictionary mapping form IDs to their split according to IAM Lines LWITLRT."""
-        split_by_id = {id_: "train" for id_ in self.train_ids}
-        split_by_id.update({id_: "val" for id_ in self.validation_ids})
-        split_by_id.update({id_: "test" for id_ in self.test_ids})
-        return split_by_id
-
+    
     @cachedproperty
     def train_ids(self):
         """A list of form IDs which are in the IAM Lines LWITLRT training set."""
@@ -113,6 +101,26 @@ class IAM:
         val_ids = _get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset1.txt")
         val_ids.extend(_get_ids_from_lwitlrt_split_file(EXTRACTED_DATASET_DIRNAME / "task/validationset2.txt"))
         return val_ids
+    
+    def _get_ids_from_lwitlrt_split_file(filename: str) -> List[str]:
+        """Get the ids from Large Writer Independent Text Line Recognition Task (LWITLRT) data split file."""
+        with open(filename, "r") as f:
+            line_ids_str = f.read()
+        line_ids = line_ids_str.split("\n")
+        page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id}) # page ids are only in the first 2 parts
+        return page_ids
+
+    @cachedproperty
+    def ids_by_split(self): # page level ids
+        return {"train": self.train_ids, "val": self.validation_ids, "test": self.test_ids}
+
+    @cachedproperty
+    def split_by_id(self):
+        """A dictionary mapping form IDs to their split according to IAM Lines LWITLRT."""
+        split_by_id = {id_: "train" for id_ in self.train_ids}
+        split_by_id.update({id_: "val" for id_ in self.validation_ids})
+        split_by_id.update({id_: "test" for id_ in self.test_ids})
+        return split_by_id
 
     @property
     def xml_filenames_by_id(self):
@@ -160,13 +168,7 @@ def _extract_raw_dataset(filename: Path, dirname: Path) -> None:
             zip_file.extractall()
 
 
-def _get_ids_from_lwitlrt_split_file(filename: str) -> List[str]:
-    """Get the ids from Large Writer Independent Text Line Recognition Task (LWITLRT) data split file."""
-    with open(filename, "r") as f:
-        line_ids_str = f.read()
-    line_ids = line_ids_str.split("\n")
-    page_ids = list({"-".join(line_id.split("-")[:2]) for line_id in line_ids if line_id}) # page ids are only in the first 2 parts
-    return page_ids
+
 
 
 def _get_line_strings_from_xml_file(filename: str) -> List[str]:
